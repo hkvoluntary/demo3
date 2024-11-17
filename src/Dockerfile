@@ -1,7 +1,11 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
-
+# Build argument for Flask environment
+ARG FLASK_ENV
+# Change to 'development' for debugging, 'production' for production
+# Use the build argument to set the environment variable
+ENV FLASK_ENV=${FLASK_ENV}  
 
 # Set the working directory in the container
 WORKDIR /app
@@ -18,8 +22,6 @@ EXPOSE 5000
 # Set the environment variable for Flask
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
-# Change to 'development' for debugging
-ENV FLASK_ENV=development  
 
 # Run the Flask app
 CMD ["flask", "run"]
