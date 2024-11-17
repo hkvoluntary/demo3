@@ -3,6 +3,7 @@ from logging_config import setup_logging
 import mysql.connector
 from mysql.connector import Error
 import json
+import os
 
 app = Flask(__name__)
 
@@ -21,7 +22,11 @@ app.config['DB_HOST'] = config['db']['host']
 app.config['DB_DATABASE'] = config['db']['database']
 app.config['DB_USER'] = config['db']['user']
 app.config['DB_PASSWORD'] = config['db']['password']
-app.config['ENV'] = config['env']
+#app.config['ENV'] = config['env']
+
+# Load environment-specific settings
+ENV = os.getenv("FLASK_ENV", "development")
+app.config["ENV"] = ENV
 
 # Setup logging
 setup_logging(app)
