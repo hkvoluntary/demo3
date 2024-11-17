@@ -84,7 +84,12 @@ def read_users():
             cursor.execute(query)
             users = cursor.fetchall()
             app.logger.info(f"Retrieved {len(users)} users from the database")
-            return jsonify(users), 200
+            # Use jsonify and pretty print the JSON with indent=4
+            response = jsonify(users)
+            response.status_code = 200
+            response.data = json.dumps(users, indent=4)  # Add pretty formatting
+            return response
+            #return jsonify(users), 200
         except Error as e:
             app.logger.error(f"Database read error: {e}")
             return jsonify({'error': str(e)}), 500
